@@ -1,0 +1,17 @@
+.img_product{
+    width: 400px;
+    height: 400px;
+}
+
+.product_container{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.product {
+    width: 80%;
+}
+
+#quantity {
+    width: 40px;
+}

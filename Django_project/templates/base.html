@@ -31,6 +31,7 @@
             {% comment %} <a class="menu_items" href="{% url "profile_app:profile" request.user.id %}">Profile</a> {% endcomment %}
             {% else %}
                 <a class="menu_items" href="{% url "account_app:login_user" %}">Đăng nhập</a>
+                <a class="menu_items" href="{% url "account_app:register_user" %}">Đăng kí</a>
             {% endif %}
         </div>  
     </div>
@@ -56,6 +57,7 @@
         {% block product_content %}{% endblock product_content %}
         {% block shop_content %}{% endblock shop_content %}
         {% block login_content %}{% endblock login_content %}
+        {% block register_content %}{% endblock register_content %}
     </div>
 
     <!-- footer  -->

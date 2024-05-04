@@ -11,7 +11,7 @@ Chi tiết sản phẩm
     <script src="{% static 'js/shop.js' %}"></script>
 {% endblock link_content %}
 
-{% block product_content %}
+{% block content %}
 <div class="product_container">
     <div class="col-sm-4 product">
         <img src="{% static 'image/product/'|add:product.img_detail_url %}" alt="img_product" class="img_product"><h4>{{product.product_name}}</h4>
@@ -25,4 +25,4 @@ Chi tiết sản phẩm
         <input type="button" value="+" class="btn increaseBtn" data-product-id="{{ product.product_id }}">
     </div>
 </div>
-{% endblock product_content %}
+{% endblock content %}

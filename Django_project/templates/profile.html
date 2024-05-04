@@ -1,1 +1,23 @@
-Trang profile
+{% extends 'base.html' %}
+
+{% block banner %}{% endblock banner %}
+
+{% block title_content %}Trang profile {% endblock title_content%}
+
+{% block content %}
+<div class="col-md-6 offset-md-3">
+    <h1>Trang profile</h1>
+    <p>Họ: <span>{{ userInfo.user.last_name }}</span></p>
+    <p>Tên: <span>{{ userInfo.user.first_name }}</span></p>
+    <p>Email: <span>{{ userInfo.user.email }}</span></p>
+
+    <p>Ngày sinh: <span>{{ userInfo.dob }}</span></p>
+    <p>Giới tính: <span>{{ userInfo.gender }}</span></p>
+    <p>Địa chỉ: <span>{{ userInfo.address }}</span></p>
+    <p>Số điện thoại: <span>{{ userInfo.phone }}</span></p>
+
+    
+    <a class="menu_items btn btn-secondary" href="{% url "profile_app:updateInfo" user.username %}">Chỉnh sửa thông tin</a>
+    <a class="menu_items btn btn-secondary" href="{% url "account_app:change_password" %}">Đổi mật khẩu</a>
+</div>
+{% endblock content %}

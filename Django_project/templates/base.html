@@ -25,13 +25,16 @@
             <a class="menu_items" href="">Giới Thiệu</a>
             <a class="menu_items" href="{% url "blog_app:blog" %}">Blogs</a>
             <a class="menu_items" href="{% url "contact_app:contact" %}">Liên hệ</a>
+            <a class="menu_items" href="{% url "cart_app:cart" %}">Giỏ hàng</a>
+
             {% if user.is_authenticated %}
-            {% comment %} <a class="menu_items" href="{% url "profile_app:profile" %}">Profile</a> {% endcomment %}
                 <a class="menu_items" href="{% url "account_app:logout_user" %}">Đăng xuất</a>
-            {% comment %} <a class="menu_items" href="{% url "profile_app:profile" request.user.id %}">Profile</a> {% endcomment %}
+                <a class="menu_items" href="{% url "profile_app:profile" user.username %}">Profile</a>
             {% else %}
                 <a class="menu_items" href="{% url "account_app:login_user" %}">Đăng nhập</a>
-                <a class="menu_items" href="{% url "account_app:register_user" %}">Đăng kí</a>
+                {% block register_button_block%}
+                    <a class="menu_items" href="{% url "account_app:register_user" %}">Đăng kí</a>
+                {% endblock register_button_block%}
             {% endif %}
         </div>  
     </div>
@@ -48,16 +51,16 @@
                 </div>
             </div>
         {% endblock%}
-
-        {% block home_content%}{% endblock home_content%}
-        {% block blog_content%}{% endblock blog_content%}
-        {% block checkout_content%}{% endblock checkout_content%}
-        {% block contact_content%}{% endblock contact_content%}
-        {% block cart_content %}{% endblock cart_content %}
-        {% block product_content %}{% endblock product_content %}
-        {% block shop_content %}{% endblock shop_content %}
-        {% block login_content %}{% endblock login_content %}
-        {% block register_content %}{% endblock register_content %}
+        {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor %}
+        {% endif %}
+        
+        {% block content%}{% endblock content%}
     </div>
 
     <!-- footer  -->

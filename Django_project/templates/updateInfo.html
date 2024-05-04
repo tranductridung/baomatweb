@@ -1,19 +1,18 @@
 {% extends 'base.html' %}
 
-{% block title_content%}TRANG ĐĂNG KÍ{% endblock title_content%}
+{% block title_content%}Trang cập nhật thông tin{% endblock title_content%}
 
 {% block banner%}{% endblock banner%}
 
 {% block content %}
 <div class="col-md-6 offset-md-3">
-    <h1>Trang đăng kí</h1>
-    <form action="{% url 'account_app:register_user' %}" method="POST" >
+    <h1>Cập nhật thông tin</h1>
+    <form action="{% url 'profile_app:updateInfo' user.username%}" method="POST" >
         {% csrf_token %}
         {{ user_form.as_p }}
         {{ profile_form.as_p }}
-
         <button type="submit" class="btn btn-secondary" >
-            Register
+          Update
         </button>
     </form>
 </div>

@@ -1,12 +1,13 @@
 {% extends 'base.html' %}
 
 {% block banner %}{% endblock banner %}
+{% block register_button_block %}{% endblock register_button_block %}
 
 {% block title_content%}
 Login
 {% endblock title_content%}
 
-{% block login_content%}
+{% block content %}
 <div class="col-md-6 offset-md-3">
     <h1>LOGIN PAGE</h1>
     <form method="POST" action="{% url 'account_app:login_user' %}">
@@ -22,4 +23,4 @@ Login
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </div>
-{% endblock login_content %}
+{% endblock content %}

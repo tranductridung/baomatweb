@@ -20,5 +20,5 @@ class Product(models.Model):
         super().save(*args, **kwargs)
     
     def __str__(self):
-        return str(self.product_id)
+        return self.product_id, self.product_name
     

@@ -3,6 +3,7 @@ from . import views
 
 app_name = 'profile_app'
 urlpatterns = [
-    path('', views.profile, name = 'profile'),
+    path('<str:username>/', views.profile, name = 'profile'),
+    path('<str:username>/updateInfo/', views.updateInfo, name = 'updateInfo'),
 ]
  

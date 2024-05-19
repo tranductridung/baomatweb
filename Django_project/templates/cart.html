@@ -9,41 +9,138 @@ Giỏ hàng
 {% block link_content%}
     <link rel="stylesheet" href="{% static "css/cart.css" %}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="{% static "js/cart.js" %}"></script>
 {% endblock link_content %}
 
 {% block content %}
-<div class="body">
-      <div class="mid">
-        <div class="mid-wrap">
-          <div class="mid-title">
-            <div class="product">product</div>
-            <div class="price">price</div>
-            <div class="quantity">quantity</div>
-            <div class="subtotal">subtotal</div>
-          </div>
-      <div class="miditem_container">
-      
-      </div>
-          <div class="mid-btn">
-            <button class="btn">
-              <span>Total Quantity</span>
-              <span id="quantityDisplay"></span>
-            </button>
-            <button class="btn">
-              <span>total</span>
-              <span id = 'priceDisplay'>$45,00</span>
-            </button>
-            <a href="{% url "checkout_app:checkout" %}">
-              <button class="btn brown">
-                <span>procced to checkout</span>
-              </button>
-            </a>
+<div class="cart_content">
+    <div class="row col-9 cart_container">
+        <div class="col-9 products_container">
+            {% for product in cart_products %}
+                <div class="row product_container" data-index="{{product.product_id}}">
+                    <div class="col-4 image_container">
+                            <img src="{% static 'image/product/'|add:product.img_url %}" alt="img_product" class="img_product">
+                    </div>
 
-            <button class="btn brown delete_cart">
-              <span>Xóa giỏ hàng</span>
-            </button>
-          </div>
+                    <div class="row col-8 info_container"> 
+                        <div class="row tmp" >
+                            <div class="col-10 sub_info_container">
+                                <p class="product_name"> {{ product.product_name}} </p>
+                                <p class="product_description"> {{ product.description }} </p>
+                                
+                                <div class="row">
+                                    {% for key,value in mycart.items %}
+                                        {% if key == product.product_id|slugify %}
+                                        <div class="input-group flex-nowrap">
+                                            <span class="input-group-text" id="addon-wrapping">Số lượng</span>
+                                            <input type="text" class="quantity_input form-control" placeholder="Số lượng" min="1" data-index="{{product.product_id}}" value="{{value}}" aria-label="Username" aria-describedby="addon-wrapping">
+                                          </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            </div>
+    
+                            <div class="col-2 price_container">
+
+                                {% for key,value in total_of_product.items %}
+                                    {% if key == product.product_id|slugify %}
+                                        <span class="price" data-index={{ product.product_id }}>{{ value }}₫</span>
+                                    {% endif %}
+                                {% endfor %}
+                                    
+                            </div>
+                        </div>
+
+                        <div class="row icon_container">
+                            <div class="col-2">
+                                <button type="button" data-index="{{product.product_id}}" class="btn btn_delete delete_product">
+                                    <i class="fa-regular fa-trash-can"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            {% endfor %}
         </div>
-      </div>
+    
+        <div class="col-3 summary_container">
+            <h2>Tổng kết</h2>
+            <div class="row total_container">
+                Tổng cộng: 
+                <div id="total_price">
+                    {{total}}
+                </div>
+            </div>
+            <div class="row"></div>
+        </div>        
+    </div>
+</div>
+
+<script>
+    // Xóa sản phẩm trong giỏ hàng
+    $(document).on('click', '.delete_product', function(e){
+        e.preventDefault();
+        var productid = $(this).data('index');
+        $.ajax({
+            type: 'POST',
+            url: '{% url 'cart_app:cart_delete' %}',
+            data: {
+                product_id: productid,
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+                action: 'post'
+            },
+    
+            success: function(json){
+                obj = $('.product_container[data-index="' + productid + '"]');
+                obj.remove()
+
+                $('#total_price').html(json.total)
+                document.getElementById("cart_quantity").textContent = json.qty
+
+            },
+    
+            error: function(xhr, errmsg, err){
+            }
+        });
+    });
+
+    // Cập nhật
+    $(document).on('change', '.quantity_input', function(e){
+        var value = $(this).val();
+        if (value < 1) {
+            $(this).val(1);
+        }
+        else if (value > 10) {
+            $(this).val(10);
+        }
+
+        var productid = $(this).data('index');
+
+        $.ajax({
+            type: 'POST',
+            url: '{% url 'cart_app:cart_update' %}',
+            data: {
+                product_id: productid,
+                product_qty: $(this).val(),
+                total: $('#total_price').text(),
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+                action: 'post'
+            },
+    
+            success: function(json){
+                console.log(json.total)
+                var price = json.price;
+                $('.price[data-index="' + productid + '"]').html(price + '₫');
+
+                $('#total_price').html(json.total)
+
+                document.getElementById("cart_quantity").textContent = json.qty
+            },
+    
+            error: function(xhr, errmsg, err){
+            }
+        });
+    });
+</script>
+
 {% endblock content %}

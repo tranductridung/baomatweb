@@ -14,3 +14,4 @@ class UserProfile(models.Model):
     gender = models.CharField(max_length=4, choices=GENDER_CHOICES, null=True) 
     address = models.TextField(null=True)
     phone = models.CharField(max_length=20,null=True)
+    old_cart = models.CharField(max_length=200, blank=True, null=True)

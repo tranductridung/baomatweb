@@ -1,12 +1,16 @@
 from django.shortcuts import render
 from .models import Product
 from django.http import JsonResponse
-
+from cart_app.cart import Cart
+import json
 # Create your views here.
 def shop(request):
     object = Product.objects.all()
+    
     context = {
-        'products': object
+        'products': object,
+        'session_key': request.session.get('session_key'),
+        'mycart': Cart(request).get_cart(),
     }      
     
     return render(request,'shop.html',context)

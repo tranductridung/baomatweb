@@ -3,7 +3,9 @@ from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
 from .forms import SignUpForm, ChangePasswordForm
 from profile_app.forms import UpdateForm
-
+from profile_app.models import UserProfile
+import json
+from cart_app.cart import Cart
 # Create your views here.
 def login_user(request):
     if request.method == "POST":
@@ -12,6 +14,17 @@ def login_user(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
+            
+            current_user = UserProfile.objects.get(user__id=request.user.id)
+            # Lấy thông tin cart lưu trong db
+            saved_cart = current_user.old_cart
+            if saved_cart:
+                converted_cart = json.loads(saved_cart)
+                cart = Cart(request)
+            # Duyệt qua cart và thêm vào session
+                for key, value in converted_cart.items():
+                    cart.db_add(product=key, quantity=value)
+
             messages.success(request, ("Đăng nhập thành công"))
             return redirect('/')    
         else:

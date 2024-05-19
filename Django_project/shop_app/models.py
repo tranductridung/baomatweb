@@ -9,6 +9,7 @@ class Product(models.Model):
     stock_quantity = models.IntegerField()
     img_url = models.TextField(null=True)
     img_detail_url = models.TextField(null=True)
+    description = models.TextField(null=True)
     Robusta = models.BooleanField()
     Arabica = models.BooleanField()
     Culi = models.BooleanField()
@@ -20,5 +21,5 @@ class Product(models.Model):
         super().save(*args, **kwargs)
     
     def __str__(self):
-        return self.product_id, self.product_name
+        return f'{self.product_id} {self.product_name}'
     

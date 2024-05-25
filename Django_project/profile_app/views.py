@@ -4,9 +4,13 @@ from .forms import UpdateForm, UpdateProfileForm
 from .models import UserProfile
 
 # Create your views here.
+
 def profile(request, username):
-    userInfo = UserProfile.objects.select_related('user').get(user=request.user)    
-    return render(request, 'profile.html',{'userInfo': userInfo})
+    userInfo = UserProfile.objects.select_related('user').get(user=request.user)
+    context = {
+        'userInfo': userInfo,
+    }
+    return render(request, 'profile.html',context)
     
 def updateInfo(request, username):
     try:
@@ -14,6 +18,7 @@ def updateInfo(request, username):
     except UserProfile.DoesNotExist:
         user_profile = UserProfile(user_id=request.user.id)
         user_profile.save()
+        
     
     if request.method == "POST":
         profile_form = UpdateForm(request.POST, instance=user_profile)
@@ -29,6 +34,6 @@ def updateInfo(request, username):
     
     context = {
         'profile_form': profile_form,
-        'user_form': user_form
+        'user_form': user_form,
     }
     return render(request, 'updateInfo.html', context)

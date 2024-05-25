@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title_content%}
+Order Detail
+{% endblock title_content%}
+
+{% block link_content%}{% endblock link_content %}
+
+{% block product%}{% endblock product%}
+
+{% block content%}
+<h4>Trạng thái</h4>{{order.status}}
+
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Tên sản phẩm</th>
+        <th scope="col">Số lượng</th>
+        <th scope="col">Giá tiền</th>
+        <th scope="col">Thành tiền</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for order_detail in order_details %}
+            <tr>
+                <th scope="row">1</th>
+                <td>{{order_detail.product.product_name}}</td>
+                <td>{{order_detail.quantity}}</td>
+                <td>{{order_detail.product.price}}</td>
+                <td>{{order_detail.subtotal}}</td>
+            </tr>  
+        {% endfor %}
+    </tbody>
+</table>
+
+<h4>Tổng tiền</h4>{{order.total}}
+{% endblock content%}
+

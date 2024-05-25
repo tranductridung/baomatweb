@@ -15,3 +15,6 @@ class UserProfile(models.Model):
     address = models.TextField(null=True)
     phone = models.CharField(max_length=20,null=True)
     old_cart = models.CharField(max_length=200, blank=True, null=True)
+    
+    def __str__(self):
+        return f"{self.user.last_name} {self.user.first_name}"

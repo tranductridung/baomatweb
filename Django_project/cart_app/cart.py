@@ -23,13 +23,13 @@ class Cart():
         self.session.modified = True
         
         self.update_cart_db()
-            
+         
+    # Tổng số lượng sản phẩm trong giỏ hàng
     def __len__(self):
         qty = 0
         for value in self.cart.values():
             qty += int(value)
         return qty
-        # return len(self.cart)
     
     def get_products(self):
         product_ids = self.cart.keys()
@@ -64,6 +64,10 @@ class Cart():
         
         self.update_cart_db()
 
+    def reset_cart(self):
+        self.session['session_key'] = {}
+        self.session.modified = True
+        
     def db_add(self, product, quantity):
         product_id = str(product)
         
@@ -74,7 +78,8 @@ class Cart():
         self.session.modified = True
         
         self.update_cart_db()
-        
+    
+    # Lấy tổng tiền của từng sản phẩm
     def get_products_price(self):
         total_of_cart = {}
         
@@ -92,12 +97,14 @@ class Cart():
                     
         return total_of_cart
     
+    # Lấy tổng tiền của 1 sản phẩm
     def get_product_price(self, product_id):
         product = Product.objects.get(product_id=product_id)
         price = product.price
         quantity = self.cart[str(product.product_id)]
         return int(price) * int(quantity)
     
+    # Lấy tổng giá trị của giỏ hàng
     def get_total(self, total_of_product): 
         total = 0
     

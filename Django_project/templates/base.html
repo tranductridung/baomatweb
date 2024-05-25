@@ -35,6 +35,7 @@
             {% if user.is_authenticated %}
                 <a class="menu_items" href="{% url "account_app:logout_user" %}">Đăng xuất</a>
                 <a class="menu_items" href="{% url "profile_app:profile" user.username %}">Profile</a>
+                <a class="menu_items" href="{% url "order_app:order" %}">Đơn hàng</a>
             {% else %}
                 <a class="menu_items" href="{% url "account_app:login_user" %}">Đăng nhập</a>
                 {% block register_button_block%}
@@ -65,12 +66,12 @@
                 </div>
             </div>
         {% endblock%}
-
+        
         {% block content%}{% endblock content%}
     </div>
 
     <!-- footer  -->
-    <div class="container-fluid footer">
+    <div class="footer">
         <div class="container">
             <div class="row">
                 <div class="col-sm-3">

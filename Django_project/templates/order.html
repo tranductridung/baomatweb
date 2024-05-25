@@ -1,1 +1,44 @@
-Trang order
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title_content%}
+Quản lý đơn hàng
+{% endblock title_content%}
+
+{% block link_content%}
+    <link rel="stylesheet" href="{% static 'css/order.css' %}">
+{% endblock link_content %}
+
+{% block product%}{% endblock product%}
+
+{% block content%}
+
+<div class="col-md-6 offser-md-3">
+    <div class="card">
+        <div class="card-header">
+            Đơn hàng
+        </div>
+            
+        <div class="card-body">
+            {% for order in orders %}
+                <div class="row">
+                    {{ order.user.last_name }} {{ order.user.first_name }} 
+                    {{ order.order_date }}
+                    {{ order.total_amount }}
+                    {{ order.point }}
+                    {{ order.status }}
+
+                    <a href="{% url "order_app:order_detail" order.order_id %}">
+                        <button type="button" class="btn btn-secondary" class="order_detail" id="order_detail_{{order.order_id}}">
+                            Chi tiết
+                        </button>
+                    </a>
+                    {% empty %}
+                    Đơn hàng rỗng
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock content%}

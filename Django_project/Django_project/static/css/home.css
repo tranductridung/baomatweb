@@ -7,7 +7,6 @@
     align-items: center;
     justify-content: center;
     background-image: url("{% static 'image/background_img.png' %}");
-    /* background-image: url('/background_img.png'); */
 }
 
 .btn_banner{
@@ -80,6 +79,10 @@
     height: 50px;
 }
 
+.product_name{
+    color: #000;
+}
+
 .col_product{
     text-align: center;
 }
@@ -108,4 +111,18 @@
     text-decoration: none;
     color: black;
     margin: 0px 25px;
+}
+
+a{
+    text-decoration: none;
+    color: #000;
+}
+
+a > h4{
+    font-size: 20px;
+}
+
+.cost, h4{
+    padding-left: 37px;
+    text-align: left;
 }

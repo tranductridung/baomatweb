@@ -8,6 +8,7 @@ Sản phẩm
 {% block link_content%}
     <link rel="stylesheet" href="{% static "css/shop.css" %}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="{% static "js/shop.js" %}"></script>
 {% endblock link_content %}
 
 {%block content %}
@@ -23,21 +24,16 @@ Sản phẩm
 
             <div class="product_container">
                 {% for product in products %}
-                <div class="col-sm-4 product">
-                    <img src="{% static 'image/product/'|add:product.img_url %}" alt="img_product" class="img_product">
-                    <h4>{{product.product_name}}</h4>
-                    <div class="cost">${{product.price}}</div>
-                    
-
-                    <button class="btn btn-outline-dark">
-                        Chi tiết sản phẩm
-                        {% comment %} <a href="{% url "product_app:product_detail" product.slug product.product_id%}"> {% endcomment %}
-                    </button>
-                    
-                    <button type="button" value="{{product.product_id}}" class="btn btn-secondary" id="add_cart">
-                        Thêm vào giỏ hàng
-                    </button>
-                </div>
+                    <div class="col-sm-4 product">
+                        <a href="{% url "product_app:product_detail" product.slug product.product_id%}">
+                            <img src="{% static 'image/product/'|add:product.img_url %}" alt="img_product" class="img_product">
+                            <h4> {{ product.product_name }} </h4>
+                            <div class="cost">{{ product.price }}₫</div>
+                        </a>
+                        <button type="button" value="{{ product.product_id }}" class="btn btn-secondary" id="add_cart">
+                            Thêm vào giỏ hàng
+                        </button>
+                    </div>
                 {% endfor %}
             </div>
         </div>

@@ -11,7 +11,18 @@ Thanh toán
 
 {% block product%}{% endblock product%}
 
-{% block content %}
+{% block content%}
+    <form method="POST" action="{% url 'checkout_app:checkout' %}">
+        {% csrf_token %}
+        {{ shippingForm.as_p }}
+        <button type="submit" class="btn btn-secondary" id="checkout">
+            Đặt hàng
+        </button>
+    </form>
+{% endblock content%}
+
+
+{% comment %} {% block content %}
     <!-- form  -->
     <div class="container section_2">
         <div class="method_payment">
@@ -69,9 +80,11 @@ Thanh toán
                 </div>
             </div>
             <div class="div_btn_checkout">
-                <h5>Tổng giá trị: </h5> 
-                <button class="btn_checkout">Đặt hàng</button>
+                <h5>Tổng giá trị: </h5>
+                <button type="button" class="btn btn-secondary" id="checkout">
+                    Đặt hàng
+                </button>
             </div>
         </div>
     </div>
-{% endblock content %}
+{% endblock content %} {% endcomment %}

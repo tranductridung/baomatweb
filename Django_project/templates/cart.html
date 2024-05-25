@@ -62,18 +62,26 @@ Giỏ hàng
 
             {% endfor %}
         </div>
-    
+{% if mycart %}
         <div class="col-3 summary_container">
             <h2>Tổng kết</h2>
             <div class="row total_container">
                 Tổng cộng: 
                 <div id="total_price">
-                    {{total}}
+                    {{total}}₫
                 </div>
             </div>
             <div class="row"></div>
         </div>        
     </div>
+{% else %}
+<h3>Bạn chưa thêm sản phẩm nào vào giỏ hàng</h3>
+<h3>
+    <a href="{% url "shop_app:shop" %}">
+        Bắt đầu mua sắm --->
+    </a>
+</h3>
+{% endif %}
 </div>
 
 <script>

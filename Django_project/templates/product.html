@@ -16,13 +16,36 @@ Chi tiết sản phẩm
     <div class="col-sm-4 product">
         <img src="{% static 'image/product/'|add:product.img_detail_url %}" alt="img_product" class="img_product"><h4>{{product.product_name}}</h4>
         <div class="cost">${{product.price}}</div>
-        <button class="btn btn-outline-dark addToCart" data-product-id="{{ product.product_id }}" data-product-name="{{ product.product_name }}" data-product-price="{{ product.price }}" data-product-img="{{ product.img_url }}">Add to cart</button>
         <a href="{% url "shop_app:shop" %}">
             <button class="btn btn-outline-dark">Tiếp tục mua hàng</button>
         </a>
-        <input type="button" value="-" class="btn decreaseBtn" data-product-id="{{ product.product_id }}">
-        <input type="text" class="quantityInput" name="quantity" value="1" data-product-id="{{ product.product_id }}">
-        <input type="button" value="+" class="btn increaseBtn" data-product-id="{{ product.product_id }}">
+        <button type="button" value="{{ product.product_id }}" class="btn btn-secondary" id="add_cart">
+            Thêm vào giỏ hàng
+        </button>
     </div>
 </div>
+<script>
+    $(document).on('click', '#add_cart', function(e){
+        e.preventDefault();
+        $.ajax({
+            type: 'POST',
+            url: '{% url 'cart_app:cart_add' %}',
+            data: {
+                product_id: $(this).val(),
+                product_qty: 1,
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+                action: 'post'
+            },
+    
+            success: function(json){
+                document.getElementById("cart_quantity").
+                    textContent = json.qty
+            },
+    
+            error: function(xhr, errmsg, err){
+    
+            }
+        });
+    });
+</script>
 {% endblock content %}

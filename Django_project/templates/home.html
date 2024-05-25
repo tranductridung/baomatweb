@@ -86,16 +86,11 @@ Trang chủ
     <div class="row row_product_1">
         {% for product in products|slice:":3" %}
         <div class="col-sm-4 col_product">
-            <img src="{% static 'image/product/'|add:product.img_url %}" alt="img_product" class="img_product">
-            <h4>{{product.product_name}}</h4>
-            <div class="cost">${{ product.price }}</div>
             <a href="{% url "product_app:product_detail" product.slug product.product_id%}">
-                <button class="btn btn-outline-dark">Chi tiết sản phẩm</button>
+                <img src="{% static 'image/product/'|add:product.img_url %}" alt="img_product" class="img_product">
+                <h4> {{ product.product_name }} </h4>
+                <div class="cost">{{ product.price }}₫</div>
             </a>
-            {% comment %} <button class="btn btn-outline-dark addToCart" data-product-id="{{ product.product_id }}" data-product-name="{{ product.product_name }}" data-product-price="{{ product.price }}" data-product-img="{{ product.img_url }}">Add to cart</button>
-            <input type="button" value="-" class="btn decreaseBtn" data-product-id="{{ product.product_id }}">
-            <input type="text" class="quantityInput" name="quantity" value="1" data-product-id="{{ product.product_id }}">
-            <input type="button" value="+" class="btn increaseBtn" data-product-id="{{ product.product_id }}"> {% endcomment %}
         </div>
         {% endfor %} 
     </div>
@@ -103,16 +98,11 @@ Trang chủ
     <div class="row row_product_2">
         {% for product in products|slice:"3:6"%}
             <div class="col-sm-4 col_product">
-                <img src="{% static 'image/product/'|add:product.img_url %}" alt="img_product" class="img_product">
-                <h4>{{product.product_name}}</h4>
-                <div class="cost">${{ product.price }}</div>
-                <a href="{% url "product_app:product_detail" product.slug product.product_id%}">
-                    <button class="btn btn-outline-dark">Chi tiết sản phẩm</button>
-                </a>
-                    {% comment %} <button class="btn btn-outline-dark addToCart" data-product-id="{{ product.product_id }}" data-product-name="{{ product.product_name }}" data-product-price="{{ product.price }}" data-product-img="{{ product.img_url }}">Add to cart</button>
-                    <input type="button" value="-" class="btn decreaseBtn" data-product-id="{{ product.product_id }}">
-                    <input type="text" class="quantityInput" name="quantity" value="1" data-product-id="{{ product.product_id }}">
-                    <input type="button" value="+" class="btn increaseBtn" data-product-id="{{ product.product_id }}"> {% endcomment %}
+                <a class="product_name" href="{% url "product_app:product_detail" product.slug product.product_id%}">
+                    <img src="{% static 'image/product/'|add:product.img_url %}" alt="img_product" class="img_product">
+                    <h4>{{ product.product_name }}</h4>
+                    <div class="cost">{{ product.price }}₫</div>
+                </a> 
             </div>
         {% endfor %}
     </div>

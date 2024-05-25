@@ -28,5 +28,5 @@ urlpatterns = [
     path('cart/',include('cart_app.urls')),
     path('product/',include('product_app.urls')),
     path('profile/',include('profile_app.urls')),
-    path('order_app/',include('order_app.urls')),
+    path('order/',include('order_app.urls')),
 ]

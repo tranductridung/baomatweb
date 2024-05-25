@@ -9,7 +9,9 @@
     <h1>Cập nhật thông tin</h1>
     <form action="{% url 'profile_app:updateInfo' user.username%}" method="POST" >
         {% csrf_token %}
+        <strong>Thông tin tài khoản</strong>
         {{ user_form.as_p }}
+        <strong>Thông tin người dùng</strong>
         {{ profile_form.as_p }}
         <button type="submit" class="btn btn-secondary" >
           Update

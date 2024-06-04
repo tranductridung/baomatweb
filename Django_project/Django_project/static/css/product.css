@@ -4,14 +4,37 @@
 }
 
 .product_container{
-    display: flex;
-    flex-wrap: wrap;
+    width: 100vw;
 }
 
-.product {
-    width: 80%;
+.product_container > .row{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    padding: 50px 0 20px;
+    text-align: center;
+}
+.product_content {
+    display: flex;
+    flex-flow: column;
+    text-align: left;
 }
 
 #quantity {
     width: 40px;
+}
+
+.product_content_item{
+    margin: 10px 0;
+}
+
+.product_img, .img_product{
+    float: right;
+}
+
+
+.cost{
+    font-size: 20px;
+    color: red;
+    font-weight: 400;
 }

@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from .forms import UpdateForm, UpdateProfileForm
 from .models import UserProfile
-
+from django.contrib.auth.hashers import make_password
 # Create your views here.
 
 def profile(request, username):
@@ -26,6 +26,7 @@ def updateInfo(request, username):
         if profile_form.is_valid() and user_form.is_valid():
             profile_form.save()
             user_form.save()
+            
             messages.success(request,("Chỉnh sửa thông tin người dùng thành công!"))
             return redirect('/')
     else:

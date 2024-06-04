@@ -1,9 +1,12 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render
 from .models import Order,OrderDetail
-
 # Create your views here.
+
 def order(request):
-    orders = Order.objects.select_related('user').filter(user=request.user)
+    orders = None
+    
+    if request.user.is_authenticated:
+        orders = Order.objects.select_related('user').filter(user=request.user)
 
     context = {
         'orders': orders

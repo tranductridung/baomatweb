@@ -4,7 +4,7 @@ from order_app.models import Order, OrderDetail
 from shop_app.models import Product
 import datetime
 from cart_app.cart import Cart
-
+from django.contrib import messages
 # Create your views here.
 
 def checkout(request): 
@@ -43,10 +43,11 @@ def checkout(request):
                 )
             
             cart.reset_cart()
-            
+            messages.success(request, ("Thanh toán đơn hàng thành công"))
             return redirect('/')
 
         else:
+            messages.error(request, ("Thanh toán đơn hàng bị lỗi. Vui lòng thực hiện lại..."))
             return redirect('/checkout')
     else:
         shippingForm = ShippingForm()

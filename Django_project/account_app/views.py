@@ -1,10 +1,12 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.hashers import make_password
 from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
 from .forms import SignUpForm, ChangePasswordForm
 from profile_app.forms import UpdateForm
 from profile_app.models import UserProfile
 import json
+from django.contrib.auth.decorators import login_required
 from cart_app.cart import Cart
 # Create your views here.
 def login_user(request):
@@ -65,6 +67,7 @@ def register_user(request):
     }
     return render(request, 'register.html', context)
 
+@login_required
 def change_password(request):
     if request.user.is_authenticated:
         currentUser = request.user

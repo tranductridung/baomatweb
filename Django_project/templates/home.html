@@ -16,7 +16,6 @@ Trang chủ
         <div class="row row_banner">
             <div class="col-sm-3">
                 <h1 class="title_banner">Time to discover</h1>
-                <p class="text_banner">text gi day</p>
                 <button class="btn_banner">Khám phá</button>
                 <div class="media_items_list">
                     <a class="media_item" href=""><i class="fa-brands fa-square-facebook"></i></a>
@@ -61,7 +60,7 @@ Trang chủ
                     THIS IS FOLLOWED BY THE GRINDING
                     The coffee is brewed by first roasting the green coffee beans over hot coals in a brazier. Once the beans are roasted each participant is given an opportunity to sample the aromatic smoke by wafting it towards them.
                 </p>
-                <button class="cta_btn">Đọc thêm</button>
+                <button class="cta_btn btn btn-secondary">Đọc thêm</button>
             </div>
             <div class="col-sm-6">
                 <img src="{% static "image/img_01.png" %}" alt="img_cta" class="img_cta">
@@ -88,7 +87,7 @@ Trang chủ
         <div class="col-sm-4 col_product">
             <a href="{% url "product_app:product_detail" product.slug product.product_id%}">
                 <img src="{% static 'image/product/'|add:product.img_url %}" alt="img_product" class="img_product">
-                <h4> {{ product.product_name }} </h4>
+                <p class="product_title"> {{ product.product_name }} </p>
                 <div class="cost">{{ product.price }}₫</div>
             </a>
         </div>
@@ -100,9 +99,9 @@ Trang chủ
             <div class="col-sm-4 col_product">
                 <a class="product_name" href="{% url "product_app:product_detail" product.slug product.product_id%}">
                     <img src="{% static 'image/product/'|add:product.img_url %}" alt="img_product" class="img_product">
-                    <h4>{{ product.product_name }}</h4>
+                    <p class="product_title">{{ product.product_name }}</p>
                     <div class="cost">{{ product.price }}₫</div>
-                </a> 
+                </a>
             </div>
         {% endfor %}
     </div>

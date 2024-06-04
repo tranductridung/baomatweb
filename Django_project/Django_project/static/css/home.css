@@ -121,8 +121,17 @@ a{
 a > h4{
     font-size: 20px;
 }
+.cost{
+    color: red;
+    font-size: 15px;
+}
 
-.cost, h4{
-    padding-left: 37px;
+.product_title{
+    font-size: 20px;
+}
+.cost, .product_title{
+    margin-left: 40px;
     text-align: left;
 }
+
+

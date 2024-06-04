@@ -5,7 +5,7 @@ from django.utils.text import slugify
 class Product(models.Model):
     product_id = models.AutoField(primary_key=True)
     product_name = models.CharField(max_length=255)
-    price = models.DecimalField(max_digits=10, decimal_places=2)
+    price = models.DecimalField(max_digits=10, decimal_places=0)
     stock_quantity = models.IntegerField()
     img_url = models.TextField(null=True)
     img_detail_url = models.TextField(null=True)

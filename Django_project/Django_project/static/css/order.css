@@ -1,3 +1,8 @@
 .order_detail{
     width: fit-content;
 }
+
+.container{
+    padding: 20px 0;
+    text-align: center;
+}

@@ -12,6 +12,7 @@ Thanh toán
 {% block product%}{% endblock product%}
 
 {% block content%}
+    {% if  user.is_authenticated %}
     <form method="POST" action="{% url 'checkout_app:checkout' %}">
         {% csrf_token %}
         {{ shippingForm.as_p }}
@@ -19,6 +20,13 @@ Thanh toán
             Đặt hàng
         </button>
     </form>
+    {% else %}
+    <h1>
+        <a href="{% url 'account_app:login_user' %}">
+            Vui lòng đăng nhập để thực hiện thanh toán -->
+        </a>
+    </h1>
+    {% endif %}
 {% endblock content%}
 
 

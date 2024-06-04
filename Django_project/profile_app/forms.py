@@ -20,8 +20,8 @@ class UpdateForm(forms.ModelForm):
         required=False,
 	)
  
-	address = forms.CharField(label="Địa chỉ", max_length=100, widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Address'}))
-	phone = forms.CharField(label="Số điện thoại", widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Phone Number'}))
+	address = forms.CharField(label="Địa chỉ", max_length=100, widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Địa chỉ'}))
+	phone = forms.CharField(label="Số điện thoại", widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Số điện thoại'}))
 
 	class Meta:
 		model = UserProfile

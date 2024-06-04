@@ -8,8 +8,8 @@ class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     order_date = models.DateField()
     quantity = models.IntegerField()
-    total = models.DecimalField(max_digits=10, decimal_places=2)
-    point = models.DecimalField(max_digits=10, decimal_places=2)
+    total = models.DecimalField(max_digits=10, decimal_places=0)
+    point = models.DecimalField(max_digits=10, decimal_places=0)
     status = models.CharField(max_length=10)
 
     def __str__(self):
@@ -20,7 +20,7 @@ class OrderDetail(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.IntegerField()
-    subtotal = models.DecimalField(max_digits=10, decimal_places=2)
+    subtotal = models.DecimalField(max_digits=10, decimal_places=0)
     
     def __str__(self):
         return f"Order detail of Order {self.order.order_id}"

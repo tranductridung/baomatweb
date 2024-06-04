@@ -64,14 +64,20 @@ Giỏ hàng
         </div>
 {% if mycart %}
         <div class="col-3 summary_container">
-            <h2>Tổng kết</h2>
+            <h2>Thông tin giỏ hàng</h2>
             <div class="row total_container">
                 Tổng cộng: 
                 <div id="total_price">
-                    {{total}}₫
-                </div>
+                    {{total}}
+                </div>₫
             </div>
-            <div class="row"></div>
+            <div class="row">
+                <a href="{% url 'checkout_app:checkout' %}">
+                    <button type="button" class="btn btn-secondary">
+                        Thanh toán
+                    </button>
+                </a>
+            </div>
         </div>        
     </div>
 {% else %}

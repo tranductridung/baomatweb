@@ -5,36 +5,60 @@
 Order Detail
 {% endblock title_content%}
 
-{% block link_content%}{% endblock link_content %}
+{% block link_content%}
+<link rel="stylesheet" href="{% static "css/order_detail.css" %}">
+{% endblock link_content %}
 
 {% block product%}{% endblock product%}
 
 {% block content%}
-<h4>Trạng thái</h4>{{order.status}}
 
-<table class="table">
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Tên sản phẩm</th>
-        <th scope="col">Số lượng</th>
-        <th scope="col">Giá tiền</th>
-        <th scope="col">Thành tiền</th>
-      </tr>
-    </thead>
-    <tbody>
-        {% for order_detail in order_details %}
-            <tr>
-                <th scope="row">1</th>
-                <td>{{order_detail.product.product_name}}</td>
-                <td>{{order_detail.quantity}}</td>
-                <td>{{order_detail.product.price}}</td>
-                <td>{{order_detail.subtotal}}</td>
-            </tr>  
-        {% endfor %}
-    </tbody>
-</table>
+<div class="order_content">
+  <div class="row col-9 order_container">
+      <div class="col-8 products_container">
+          {% for order_detail in order_details %}
+              <div class="row product_container" data-index="{{product.product_id}}">
+                  <div class="col-4 image_container">
+                    <img src="{% static 'image/product/'|add:order_detail.product.img_url %}" alt="img_product" class="img_product">
+                  </div>
 
-<h4>Tổng tiền</h4>{{order.total}}
+                  <div class="row col-8 info_container"> 
+                      <div class="row tmp" >
+                          <div class="col-10 sub_info_container">
+                              <p class="product_name"> {{ order_detail.product.product_name}} </p>
+                              <p class="product_description"> {{ order_detail.product.description }} </p>
+                              <p class="product_quantity">Số lượng: {{ order_detail.quantity }} </p>
+                          </div>
+  
+                          <div class="col-2 price_container">
+                            <span class="price">{{ order_detail.subtotal }}₫</span>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          {% endfor %}
+      </div>    
+      
+      <div class="col-4 summary_container">
+        <h2>Thông tin đơn hàng</h2>
+        <div class="row total_container">
+            <div class="item">
+                <p>Ngày đặt hàng:</p> 
+                <p>{{order.order_date|date:"d/m/y"}}</p>              
+            </div>
+
+            <div class="item"> 
+              <p>Tổng số sản phẩm:</p> 
+              <p>{{order.quantity}}</p>
+            </div>
+
+            <div class="item total">
+              <p>Tổng cộng:</p> 
+              <p>{{order.total}}₫</p>
+            </div>
+
+        </div>
+    </div>
+  </div>
+</div>
 {% endblock content%}
-

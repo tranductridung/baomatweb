@@ -12,33 +12,51 @@ Quản lý đơn hàng
 {% block product%}{% endblock product%}
 
 {% block content%}
-
-<div class="col-md-6 offser-md-3">
-    <div class="card">
-        <div class="card-header">
-            Đơn hàng
-        </div>
-            
-        <div class="card-body">
-            {% for order in orders %}
-                <div class="row">
-                    {{ order.user.last_name }} {{ order.user.first_name }} 
-                    {{ order.order_date }}
-                    {{ order.total_amount }}
-                    {{ order.point }}
-                    {{ order.status }}
-
-                    <a href="{% url "order_app:order_detail" order.order_id %}">
-                        <button type="button" class="btn btn-secondary" class="order_detail" id="order_detail_{{order.order_id}}">
-                            Chi tiết
-                        </button>
-                    </a>
-                    {% empty %}
-                    Đơn hàng rỗng
+    {% if user.is_authenticated %}
+        <div class="col-md-6 offser-md-3 container">
+            <div class="card">
+                <div class="card-header">
+                    Danh sách đơn hàng
                 </div>
-            {% endfor %}
+                    
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Họ và tên</th>
+                            <th scope="col">Ngày đặt hàng</th>
+                            <th scope="col">Số lượng</th>
+                            <th scope="col">Tổng</th>
+                            <th scope="col"></th>
+                        </tr>
+                        </thead>
+                        {% for order in orders %}
+                            <tbody>
+                            <tr>
+                                <td>{{ order.user.last_name }} {{ order.user.first_name }}</td>
+                                <td>{{ order.order_date|date:"d/m/y"}}</td>
+                                <td>{{ order.quantity }}</td>
+                                <td>{{ order.total }}</td>
+                                <td>
+                                    <a href="{% url "order_app:order_detail" order.order_id %}">
+                                        <button type="button" class="btn btn-secondary" class="order_detail" id="order_detail_{{order.order_id}}">
+                                            Chi tiết
+                                        </button>
+                                    </a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        <div class="row">
+                            {% empty %}
+                            Đơn hàng rỗng
+                        </div>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
+    {% else %}
+        <h1>Vui lòng đăng nhập để xem thông tin đơn hàng của bạn...</h1>
+    {% endif %}
 
 {% endblock content%}

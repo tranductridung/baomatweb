@@ -14,7 +14,7 @@ Giỏ hàng
 {% block content %}
 <div class="cart_content">
     <div class="row col-9 cart_container">
-        <div class="col-9 products_container">
+        <div class="col-8 products_container">
             {% for product in cart_products %}
                 <div class="row product_container" data-index="{{product.product_id}}">
                     <div class="col-4 image_container">
@@ -63,7 +63,7 @@ Giỏ hàng
             {% endfor %}
         </div>
 {% if mycart %}
-        <div class="col-3 summary_container">
+        <div class="col-4 summary_container">
             <h2>Thông tin giỏ hàng</h2>
             <div class="row total_container">
                 Tổng cộng: 

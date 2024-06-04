@@ -8,6 +8,7 @@ from django.contrib import messages
 # Create your views here.
 
 def checkout(request): 
+    
     if request.method == "POST":
         shippingForm = ShippingForm(request.POST)
 

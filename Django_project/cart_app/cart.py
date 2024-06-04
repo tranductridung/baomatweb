@@ -121,3 +121,4 @@ class Cart():
             carty = carty.replace("\'", "\"")
             
             current_user.update(old_cart=carty)
+            

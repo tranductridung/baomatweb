@@ -5,7 +5,7 @@ from order_app.models import Order
 
 class shippingAddress(models.Model):
     shipping_id = models.AutoField(primary_key=True)
-    order = models.OneToOneField(Order, on_delete=models.CASCADE)
+    order = models.OneToOneField(Order, on_delete=models.CASCADE, null=True, blank=True)
     shipping_fullname = models.CharField(max_length=255, null=True)
     shipping_email = models.CharField(max_length=255, null=True)
     shipping_address1 = models.CharField(max_length=255, null=True)
@@ -18,4 +18,4 @@ class shippingAddress(models.Model):
         verbose_name_plural = "Shipping Address"
         
     def __str__(self):
-        return f"Shipping Address of Order {self.order.order_id}"
+        return f"Shipping Address of Order"

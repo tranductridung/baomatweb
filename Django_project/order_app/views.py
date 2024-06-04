@@ -14,6 +14,7 @@ def order(request):
     return render(request, "order.html", context)
 
 def order_detail(request, order_id):
+    
     order = Order.objects.get(order_id=order_id)
     
     order_details = OrderDetail.objects.filter(order = order)

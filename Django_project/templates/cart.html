@@ -13,15 +13,15 @@ Giỏ hàng
 
 {% block content %}
 <div class="cart_content">
-    <div class="row col-9 cart_container">
+    <div class="row col-10 cart_container">
         <div class="col-8 products_container">
             {% for product in cart_products %}
                 <div class="row product_container" data-index="{{product.product_id}}">
-                    <div class="col-4 image_container">
+                    <div class="col-5 image_container">
                             <img src="{% static 'image/product/'|add:product.img_url %}" alt="img_product" class="img_product">
                     </div>
 
-                    <div class="row col-8 info_container"> 
+                    <div class="row col-7 info_container"> 
                         <div class="row tmp" >
                             <div class="col-10 sub_info_container">
                                 <p class="product_name"> {{ product.product_name}} </p>
@@ -43,7 +43,7 @@ Giỏ hàng
 
                                 {% for key,value in total_of_product.items %}
                                     {% if key == product.product_id|slugify %}
-                                        <span class="price" data-index={{ product.product_id }}>{{ value }}₫</span>
+                                        <span id="price" class="price" data-index={{ product.product_id }}>{{ value }}₫</span>
                                     {% endif %}
                                 {% endfor %}
                                     
@@ -65,15 +65,28 @@ Giỏ hàng
 {% if mycart %}
         <div class="col-4 summary_container">
             <h2>Thông tin giỏ hàng</h2>
+
             <div class="row total_container">
-                Tổng cộng: 
-                <div id="total_price">
-                    {{total}}
-                </div>₫
+                <div class="item">
+                    <p>Tổng cộng:</p> 
+                    <p id="subtotal">{{subtotal}}₫</p>              
+                </div>
+
+                <div class="item">
+                    <p>Giảm giá:</p> 
+                    <p id="discount">{{discount}}%</p>      
+                </div>
+
+                <div class="item total">
+                    <p>Tổng cộng:</p> 
+                    <p id="total">{{total}}₫</p>              
+                </div>
             </div>
+
+
             <div class="row">
                 <a href="{% url 'checkout_app:checkout' %}">
-                    <button type="button" class="btn btn-secondary">
+                    <button type="button" class="checkout_btn btn btn-secondary">
                         Thanh toán
                     </button>
                 </a>
@@ -108,9 +121,9 @@ Giỏ hàng
                 obj = $('.product_container[data-index="' + productid + '"]');
                 obj.remove()
 
-                $('#total_price').html(json.total)
-                document.getElementById("cart_quantity").textContent = json.qty
-
+                $('#subtotal').html(json.subtotal + '₫')
+                $('#total').html(json.total + '₫')
+                $('#discount').html(json.discount + '%')
             },
     
             error: function(xhr, errmsg, err){
@@ -129,6 +142,7 @@ Giỏ hàng
         }
 
         var productid = $(this).data('index');
+        
 
         $.ajax({
             type: 'POST',
@@ -136,19 +150,19 @@ Giỏ hàng
             data: {
                 product_id: productid,
                 product_qty: $(this).val(),
-                total: $('#total_price').text(),
+                total: $('#subtotal').text(),
                 csrfmiddlewaretoken: '{{ csrf_token }}',
                 action: 'post'
             },
     
             success: function(json){
-                console.log(json.total)
                 var price = json.price;
                 $('.price[data-index="' + productid + '"]').html(price + '₫');
 
-                $('#total_price').html(json.total)
-
-                document.getElementById("cart_quantity").textContent = json.qty
+                $('#subtotal').html(json.subtotal + '₫')
+                $('#total').html(json.total + '₫')
+                $('#discount').html(json.discount + '%')
+                $("#cart_quantity").html(json.qty)
             },
     
             error: function(xhr, errmsg, err){

@@ -13,6 +13,16 @@ Sản phẩm
 
 {%block content %}
     <div class="container section_2">
+        <div class="filter_containter">
+            <select class="form-select" aria-label="Default select example" id="filter" onchange="loadShopPage()">
+                <option valud="0" selected>Chọn bộ lọc</option>
+                <option value="1">Giá: Tăng dần</option>
+                <option value="2">Giá: Giảm dần</option>
+                <option value="3">Tên: A-Z</option>
+                <option value="4">Tên: Z-A</option>
+              </select>
+        </div>
+
         <div class="product_list">
             <div class="btn_list">
                 <button type="button" name="All" class="btn_category" data-component="all">All</button>
@@ -21,7 +31,6 @@ Sản phẩm
                 <button type="button" name="Culi" class="btn_category" data-component="culi">Culi</button>
             </div>
             
-
             <div class="product_container">
                 {% for product in products %}
                     <div class="col-sm-4 product">
@@ -38,7 +47,9 @@ Sản phẩm
             </div>
         </div>
     </div>
+
 <script>
+    // Cập nhật giỏ hàng khi thêm sản phẩm vào giỏ
     $(document).on('click', '#add_cart', function(e){
         e.preventDefault();
         $.ajax({
@@ -61,5 +72,25 @@ Sản phẩm
             }
         });
     });
+
+
+    function loadShopPage() {
+        var filterValue = document.getElementById('filter').value;
+        $.ajax({
+            url: "{% url 'shop_app:shop' %}",
+            type: "POST",
+            data: {
+                'filter_selected': filterValue,
+                'csrfmiddlewaretoken': '{{ csrf_token }}'
+            },
+            success: function(data) {
+                obj = $(".body")
+                obj.html(data);               
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
 </script>
 {%endblock content %}

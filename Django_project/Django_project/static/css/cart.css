@@ -35,13 +35,6 @@ img {
   }
 
 
-.total{
-    padding: 10px 0;
-    border-top: 1px solid #e5e5e5;   
-    border-bottom: 1px solid #e5e5e5;  
-    float: left;
-}
-
 .summary_container>*{
     padding: 5px 0;
 }
@@ -54,6 +47,7 @@ input{
 
 .product_name{
     font-weight: bold;
+    font-size: 18px;
 }
 
 .tmp{
@@ -73,6 +67,9 @@ i{
     font-size: 28px;
 }
 
+
+
+
 .item > div {
     width: 100%;
 }
@@ -90,4 +87,15 @@ i{
 
 .sub_info_container{
     font-size: 14px;
+}
+
+.total{
+    padding: 10px 0;
+    border-top: 1px solid #e5e5e5;   
+    border-bottom: 1px solid #e5e5e5;  
+    float: left;
+}
+
+.checkout_btn{
+    width: 100%;
 }

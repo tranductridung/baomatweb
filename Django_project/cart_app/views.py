@@ -1,22 +1,41 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from shop_app.models import Product
+from profile_app.models import UserProfile
 from django.http import JsonResponse, HttpResponse
 from .cart import Cart
 
 # Create your views here.
+def cal_total(request, subtotal):
+    point = UserProfile.objects.get(user_id = request.user.id).point
+
+    if point > 100 and point < 300:
+        discount = 10
+    elif point > 300 and 500:
+        discount = 20
+    elif point > 500:
+        discount = 30
+        
+    total = (int)(subtotal * (100-discount) / 100)
+    
+    return discount, total
+        
     
 def cart(request):
     cart = Cart(request)
     cart_products = cart.get_products() 
     mycart = cart.get_cart()
     total_of_product = cart.get_products_price()
-    total = cart.get_total(total_of_product)
+    subtotal = cart.get_total(total_of_product)
     
+    discount, total = cal_total(request, subtotal)
+        
     context = {
         'cart_products': cart_products,
         'mycart': mycart,
         'total_of_product': total_of_product,
+        'subtotal': subtotal,
         'total': total,
+        'discount': discount,
     }
     return render(request, "cart.html", context)
 
@@ -43,11 +62,16 @@ def cart_delete(request):
         cart.delete(product=product_id)
         
         total_of_product = cart.get_products_price()
-        total = cart.get_total(total_of_product)
+        subtotal = cart.get_total(total_of_product)
         cart_quantity = cart.__len__()
+        
+        discount, total = cal_total(request, subtotal)
+        
         context = {
             'product': product_id,
             'total': total,
+            'subtotal': subtotal,
+            'discount': discount,
             'qty': cart_quantity,
         }
         response = JsonResponse(context)
@@ -60,8 +84,7 @@ def cart_update(request):
     if request.POST.get('action') == 'post':
         product_id = int(request.POST.get('product_id'))
         product_qty = int(request.POST.get('product_qty'))
-        total = int(request.POST.get('total'))
-        
+
         cart.update(product = product_id, quantity = product_qty)
         
         # Tính giá trị sản phẩm thay đổi số lượng
@@ -70,11 +93,18 @@ def cart_update(request):
         price = cart.get_product_price(product_id=product_id)
         
         total_of_product = cart.get_products_price()
-        total = cart.get_total(total_of_product)
+        
+        subtotal = cart.get_total(total_of_product)
+        
+        discount, total = cal_total(request, subtotal)
+        
         cart_quantity = cart.__len__()
+        
         context = {
             'price': price,
+            'discount': discount,
             'total': total,
+            'subtotal': subtotal,
             'qty': cart_quantity,
         }
         

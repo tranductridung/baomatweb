@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'axes',
     'shop_app',
     'home_app',
     'blog_app',
@@ -55,6 +56,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'axes.middleware.AxesMiddleware',
 ]
 
 ROOT_URLCONF = 'Django_project.urls'
@@ -144,3 +146,83 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+import logging
+logger = logging.getLogger('django.security') 
+
+AXES_FAILURE_LIMIT = 5  # Số lần đăng nhập thất bại tối đa trước khi khóa
+AXES_COOLOFF_TIME = 1  # Thời gian khóa tài khoản
+AXES_LOCKOUT_PARAMETERS = ['username']  # Chỉ khóa dựa trên tên người dùng
+AXES_RESET_ON_SUCCESS = True  # Đặt lại số lần thất bại sau khi đăng nhập thành công
+logger.warning(f'Failed login attempt for username: {['username']}')
+
+AUTHENTICATION_BACKENDS = [
+    'axes.backends.AxesStandaloneBackend', 
+    'django.contrib.auth.backends.ModelBackend',
+]
+
+# import os
+
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'handlers': {
+#         'file': {
+#             'level': 'INFO',
+#             'class': 'logging.FileHandler',
+#             'filename': os.path.join(BASE_DIR, 'important.log'),
+#         },
+#     },
+#     'loggers': {
+#         'django': {
+#             'handlers': ['file'],
+#             'level': 'ERROR',
+#             'propagate': True,
+#         },
+#         'django.security': {
+#             'handlers': ['file'],
+#             'level': 'INFO',
+#             'propagate': False,
+#         },
+#         'axes': {
+#             'handlers': ['file'],
+#             'level': 'INFO',
+#             'propagate': False,
+#         },
+#     },
+# }
+
+import os
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'debug_file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'debug.log'),
+        },
+        'important_file': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'important.log'),
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['debug_file'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+        'django.security': {
+            'handlers': ['important_file'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        'axes': {
+            'handlers': ['important_file'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+    },
+}

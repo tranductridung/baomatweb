@@ -8,6 +8,7 @@ from profile_app.models import UserProfile
 import json
 from django.contrib.auth.decorators import login_required
 from cart_app.cart import Cart
+
 # Create your views here.
 def login_user(request):
     if request.method == "POST":
@@ -31,7 +32,7 @@ def login_user(request):
             return redirect('/')    
         else:
             messages.success(request, ("Đăng nhập thất bại. Vui lòng thử lại..."))
-            return redirect('account/login')
+            return redirect('/account/login')
     else:
         return render(request, 'login.html')
     
